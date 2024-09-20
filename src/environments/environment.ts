@@ -2,11 +2,11 @@ const isProd = false;
 export const environment = {
   production: isProd,
   dian: {
-    domain: 'http://89.117.77.225:8090',
+    domain: 'http://154.38.165.62:8020',
   },
   session: {
-    name: 'DANISOFT SAS',
-    email: 'deivinson7059@gmail.com',
-    password: 'Danisoft2016$',
+    name: 'MONAROS SAS',
+    email: 'gerencia@monaros.co',
+    password: 'Monaros2024$',
   },
 };
