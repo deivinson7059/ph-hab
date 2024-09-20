@@ -15,6 +15,7 @@ export class AuthService {
   // Función para simular el login usando las credenciales del environment
   async login(email: string, password: string): Promise<boolean> {
     // Usar las credenciales definidas en el environment
+    console.log('session::',session, 'email::' + email, 'password::' + password);
     if (email === session.email && password === session.password) {
       const header = {
         alg: 'HS256',
