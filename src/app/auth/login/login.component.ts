@@ -41,12 +41,10 @@ export class LoginComponent implements OnInit {
     } */
 
     const { txtPassword, txtEmail } = this.loginForm.value;
-
-    console.log(txtEmail, txtPassword);
-
     // Intentar iniciar sesión
     try {
       const success = await this.authService.login(txtEmail, txtPassword);
+      console.log('success::', success);
       if (success) {
         this.router.navigate(['/admin/home']); // Redirigir a la página principal
       } else {

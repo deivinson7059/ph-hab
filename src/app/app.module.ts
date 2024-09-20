@@ -12,6 +12,9 @@ import { AppRoutes } from './app.routing';
 import { LayoutsModule } from './layouts/layouts.module';
 import { PagesModule } from './pages/pages.module';
 
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { AuthService } from './core/services/auth.service';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -27,6 +30,9 @@ import { PagesModule } from './pages/pages.module';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    AuthService,
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpinnerInterceptor,

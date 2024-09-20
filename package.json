@@ -25,7 +25,7 @@
     "bootstrap": "^5.3.3",
     "bowser": "^2.11.0",
     "feather-icons": "^4.29.0",
-    "jwt-simple": "^0.5.6",
+    "jose": "^5.9.2",
     "ngx-danisoft-utils": "^4.1.0",
     "ngx-moment": "^6.0.2",
     "ngx-socket-io": "^4.5.1",
