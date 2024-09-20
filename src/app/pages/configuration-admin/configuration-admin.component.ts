@@ -2265,10 +2265,10 @@ export class ConfigurationAdminComponent implements OnInit {
 
   StepSelect(_step: number) {
     // no permitimos avanzar a otros pasos
-    /* if (this.StepOne===false && _step > 1) {
+    if (this.StepOne===false && _step > 1) {
       this.toastrService.error('Debes completar el primer paso antes de continuar.', 'Error');
       return; // Salir de la función si no existe el token
-    } */
+    }
 
     // Restablecer todos los pasos a su estado inicial
     this.stepItems.forEach((step, index) => {
