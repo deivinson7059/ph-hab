@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { SignJWT } from 'jose';
-
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 const { session } = environment;
 
@@ -11,77 +8,73 @@ const { session } = environment;
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private jwtHelper: JwtHelperService, private router: Router) {}
+  constructor(private router: Router) {}
 
-  private secretKey = 'Danisoft2025$Dd';
+  private tokenKey = 'app-token';
+  private expireKey = 'token-expire';
 
   // Función para simular el login usando las credenciales del environment
   async login(email: string, password: string): Promise<boolean> {
     // Verificar credenciales del environment
     if (email === session.email && password === session.password) {
-      const payload = {
-        name: session.name, // Usamos el nombre de la sesión del environment
-        email: email,
-        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // Expira en 1 día
-      };
+      // Generar un token aleatorio
+      const token = this.generateToken();
+      // Calcular la fecha de expiración (en 24 horas)
+      const expireDate = this.generateExpirationDate(24);
 
-      // Crear el JWT
-      const token = await this.createJWT(payload, this.secretKey);
-      localStorage.setItem('app-token', token); // Guardamos el token
+      // Guardar el token y la fecha de expiración en localStorage
+      localStorage.setItem(this.tokenKey, token);
+      localStorage.setItem(this.expireKey, expireDate.toString());
+
       return true;
     }
     return false;
   }
 
-  // Crear y firmar el JWT con HMAC-SHA256
-  async createJWT(payload: object, secret: string): Promise<string> {
-    const encoder = new TextEncoder();
-    const secretKey = encoder.encode(secret);
-
-    // Crear y firmar el JWT con el algoritmo HMAC-SHA256
-    const jwt = await new SignJWT(payload as any)
-      .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-      .setIssuedAt()
-      .setExpirationTime('2h') // Expiración de 2 horas
-      .sign(secretKey);
-
-    return jwt;
+  // Generar un token aleatorio
+  private generateToken(): string {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const length = 32; // Longitud del token
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
   }
 
-  // Decodificar el JWT
-  decodeJWT(token: string): any {
-    return this.jwtHelper.decodeToken(token);
+  // Generar la fecha de expiración (en horas)
+  private generateExpirationDate(hours: number): number {
+    const now = new Date();
+    return now.getTime() + hours * 60 * 60 * 1000; // Convertir horas a milisegundos
   }
 
-  // Verificar si el token ha expirado
-  isTokenExpired(token: string): boolean {
-    return this.jwtHelper.isTokenExpired(token);
-  }
-
-  // Obtener la fecha de expiración del token
-  getTokenExpirationDate(token: string): Date | null {
-    return this.jwtHelper.getTokenExpirationDate(token);
-  }
-
-  // Obtener el token almacenado en localStorage
-  getToken(): string | null {
-    return localStorage.getItem('app-token');
-  }
-
-  // Verificar si el usuario está autenticado
+  // Verificar si el token es válido y si no ha expirado
   isAuthenticated(): boolean {
-    const token = this.getToken();
-    if (token && !this.isTokenExpired(token)) {
-      return true;
-    } else {
-      this.logout();
+    const token = localStorage.getItem(this.tokenKey);
+    const expire = localStorage.getItem(this.expireKey);
+
+    if (token && expire) {
+      const expireDate = parseInt(expire, 10);
+      const now = new Date().getTime();
+
+      // Comprobar si la fecha actual está antes de la fecha de expiración
+      if (now < expireDate) {
+        return true;
+      } else {
+        this.logout(); // Si ha expirado, eliminamos el token
+      }
     }
+
     return false;
   }
 
-  // Cerrar sesión
+  // Cerrar sesión y eliminar el token
   logout(): void {
-    localStorage.removeItem('app-token');
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.expireKey);
     this.router.navigate(['/auth/login']);
   }
 }
