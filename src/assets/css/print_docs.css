@@ -1,0 +1,171 @@
+pg-header,
+pg-footer,
+pg-sidebar,
+pg-breadcrumbs,
+pg-spinner,
+router-outlet,
+footer,
+button,
+head,
+nav,
+.no-print,
+.derecho:before,
+.foot:before {
+  display: none !important;
+}
+.print {
+  margin: 0cm;
+  margin-top: -1.1cm;
+  padding-bottom: 1cm;
+  display: block !important;
+}
+
+@page {
+  /* size: auto; */
+  size: auto; /*8cm 32cm; auto es el valor inicial */
+  margin: 0cm; /* margin:0mm afecta el margen en la configuración de impresión */
+}
+
+body {
+  min-width: 100% !important;
+  background-color: white !important;
+}
+.container-grey {
+  background-color: white;
+}
+.printable-content {
+  display: block;
+  margin: auto;
+  padding: 0 0.1cm 0 0.6cm;
+  position: relative;
+  background-color: white;
+  width: auto;
+}
+.half-page {
+  width: 14.8cm !important;
+  font-size: 12px;
+  height: 20cm;
+}
+.half-page-hori {
+  width: 20cm !important;
+  font-size: 12px;
+}
+.pos-page {
+  margin: 0 !important;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 20px;
+  color: black;
+  padding-right: 20px;
+}
+.print_logo {
+  width: 100%;
+}
+.info_left {
+  width: 49%;
+  display: inline-block;
+}
+.info_right {
+  width: 49%;
+  text-align: right;
+  display: inline-block;
+}
+.head_left {
+  width: 30%;
+  display: inline-block;
+}
+.head_right {
+  width: 69%;
+  display: inline-block;
+  text-align: right;
+}
+.info_left_f {
+  width: 10.9cm;
+}
+.info_right_f {
+  width: 9.9cm;
+  text-align: right;
+}
+.head_left_f {
+  width: 5cm;
+}
+.head_right_f {
+  width: 15cm;
+  text-align: right;
+}
+
+.company_info {
+  text-align: right;
+  line-height: 125%;
+}
+
+.print_footer span {
+  padding: 0 103px;
+  border-top: 1px solid;
+}
+.print_footer {
+  margin-top: 62px;
+}
+h1,
+h2,
+h3 {
+  color: black;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+h4 {
+  font-style: 15px;
+}
+.print_footer p {
+  line-height: 0.5;
+}
+
+.print_table {
+  margin-top: 10px;
+  width: 100%;
+}
+.print_table_totals {
+  width: 100%;
+  text-align: right;
+  margin-top: 15px;
+}
+.print_table tr {
+  border-bottom: 1px solid;
+}
+
+.print_table td {
+  padding: 3px;
+}
+.pos-page .company_info {
+  text-align: center !important;
+  width: 100%;
+}
+
+.pos-page hr {
+  margin: 2px 0 !important;
+}
+.pos_info,
+.pos_user {
+  width: 100%;
+  text-align: center;
+}
+.pos_signature {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 1.5cm;
+}
+.invoice_legal {
+  text-align: justify;
+  font-size: 0.85em;
+}
+.invoice_total {
+  width: 50%;
+}
+.invoice_due {
+  float: none;
+  width: 49%;
+  display: inline-block;
+}
+.invoice_footer {
+  padding-top: 0.5cm;
+}

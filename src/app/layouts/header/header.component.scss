@@ -1,0 +1,134 @@
+.iconLinkDs svg {
+  height: 1.3rem !important;
+  width: 1.3rem !important;
+  margin-left: 0.05em !important;
+  margin-top: 0.05em !important;
+}
+
+a.dropdown-item-new {
+  color: black;
+  padding: 5px 30px 5px 25px;
+  min-height: 3.5rem;
+}
+
+.text-suc-green {
+  font-size: 1rem;
+  color: #00d274 !important;
+}
+
+.text-suc-blue {
+  font-size: 1rem;
+  color: #6900c7 !important;
+}
+
+.avatar-online {
+  position: relative;
+}
+
+.avatar-online::before {
+  background-color: #00ac69 !important;
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  position: absolute;
+  bottom: 3.8px;
+  right: 3.8px;
+}
+
+.avatar-offline {
+  position: relative;
+}
+
+.avatar-offline::before {
+  background-color: #d4dae3 !important;
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  position: absolute;
+  bottom: 3.8px;
+  right: 3.8px;
+}
+
+.menulateral {
+  padding-top: 0;
+  padding-bottom: 0;
+  max-height: calc(21rem - 1px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* height: 400px !important;
+  overflow-y: auto !important; */
+}
+
+/* .menulateral::-webkit-scrollbar {
+  width: 0.75rem;
+  color: black;
+}
+ */
+
+/*Webkit*/
+.menulateral::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.menulateral::-webkit-scrollbar:window-inactive {
+  display: none;
+}
+
+.menulateral::-webkit-scrollbar-track-piece {
+  border-radius: 2px;
+  background-color: #369;
+  background-clip: content-box;
+  border-radius: 6px;
+  border: solid 4px transparent;
+}
+
+.menulateral::-webkit-scrollbar-track-piece:decrement {
+  background: orange;
+  background-clip: content-box;
+  border: solid 4px transparent;
+}
+
+.menulateral::-webkit-scrollbar-button:vertical:start:decrement {
+  background: transparent url(https://elcssar.com/ejemplos/arrow_up.png)
+    no-repeat center center;
+}
+
+.menulateral::-webkit-scrollbar-button:vertical:end:decrement {
+  background: transparent url(https://elcssar.com/ejemplos/arrow_up.png)
+    no-repeat center center;
+}
+
+.menulateral::-webkit-scrollbar-button:vertical:end:increment {
+  background: transparent url(https://elcssar.com/ejemplos/arrow_down.png)
+    no-repeat center center;
+}
+
+.menulateral::-webkit-scrollbar-button:horizontal:decrement {
+  background: transparent url(https://elcssar.com/ejemplos/arrow_left.png)
+    no-repeat center center;
+}
+
+.menulateral::-webkit-scrollbar-button:horizontal:increment {
+  background: transparent url(https://elcssar.com/ejemplos/arrow_right.png)
+    no-repeat center center;
+}
+
+.menulateral::-webkit-scrollbar-thumb {
+  height: 10px;
+  width: 4px;
+  background-color: #09c;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px -2px rgba(51, 0, 51, 0.5);
+}
+
+.menulateral::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.menulateral::-webkit-resizer {
+  background: transparent url(https://elcssar.com/ejemplos/expandIcon.png)
+    no-repeat -1px -1px;
+}
+
+.menulateral::-webkit-scrollbar-track-piece:no-button {
+  background-color: red;
+}

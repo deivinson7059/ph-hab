@@ -1,0 +1,63 @@
+<div class="auth-full-height d-flex flex-column justify-content-center">
+  <div class="row justify-content-center">
+    <div class="col-md-9">
+      <div class="card row mx-0 flex-row overflow-hidden">
+        <div class="col-md-4 bg-size-cover d-flex align-items-center p-4"
+          style="background-image: url('assets/img/bg-2.jpg');">
+          <div>
+            <div class="mb-5">
+              <div class="logo">
+                <img alt="logo" class="img-fluid" src="assets/img/logo-white.png" style="height: 5.5rem;">
+              </div>
+            </div>
+            <h3 class="text-white">PgFacture®</h3>
+            <p class="text-white mt-4 mb-5 o-75">En PgFacture® somos tu aliado en la gestion comercial de tu negocio
+            </p>
+          </div>
+        </div>
+        <div class="col-md-8 px-0">
+          <div class="card-body">
+            <div class="login-0">
+              <div class="my-5 mx-auto" style="max-width: 350px;">
+                <div class="mb-3">
+                  <h3>Iniciar Sesion</h3>
+                </div>
+                <form autocomplete="off" id="phoneForm" role="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  <div class="form-group mb-3">
+                    <label class="form-label d-flex justify-content-between">
+                      <span>Email:</span>
+                    </label>
+                    <input id="username" type="email" formControlName="txtEmail" placeholder="Digite el Email"
+                      aria-label="Search" class="form-control" required />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="form-label d-flex justify-content-between">
+                      <span>Contraseña:</span>
+                    </label>
+                    <div class="input-group input-group-joined mb-4 input-group-sm input-group-solid">
+                      <input [type]="fieldTextType ? 'text' : 'password'" placeholder="Digite la Contraseña"
+                        aria-label="Search" class="form-control" formControlName="txtEmail">
+                      <div *ngIf="fieldTextType" class="input-group-text" (click)="toggleFieldTextType()">
+                        <i class="fa fa-eye-slash"></i>
+                      </div>
+
+                      <div *ngIf="!fieldTextType" class="input-group-text" (click)="toggleFieldTextType()">
+                        <i class="fa fa-eye"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+                  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+                    {{ errorMessage }}
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

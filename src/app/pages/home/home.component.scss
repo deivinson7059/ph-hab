@@ -1,0 +1,42 @@
+.s-middle-img img {
+  position: relative;
+  width: 75%;
+}
+
+img {
+  display: inline-block;
+  max-width: 100%;
+}
+
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+img {
+  overflow-clip-margin: content-box;
+  overflow: clip;
+}
+
+.s-middle-img {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}

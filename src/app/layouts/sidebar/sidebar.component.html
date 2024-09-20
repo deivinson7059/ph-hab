@@ -1,0 +1,200 @@
+<nav class="sidenav shadow-right sidenav-light">
+  <div class="sidenav-menu">
+    <div class="nav accordion" id="accordionSidenav">
+
+      <!-- Sidenav Menu Heading (Account)
+      * * Note: * * Visible only on and above the sm breakpoint
+      <div class="sidenav-menu-heading d-sm-none">Account</div>
+      <a class="nav-link d-sm-none" href="#!">
+          <div class="nav-link-icon"><i data-feather="bell"></i></div>
+          Alerts
+          <span class="badge bg-warning-soft text-warning ms-auto">4 New!</span>
+      </a>
+
+      <a class="nav-link d-sm-none" href="#!">
+          <div class="nav-link-icon"><i data-feather="mail"></i></div>
+          Messages
+          <span class="badge bg-success-soft text-success ms-auto">2 New!</span>
+      </a>
+
+      -->
+      <!-- Sidenav Menu Heading (Core)
+          <div class="sidenav-menu-heading">Core</div>
+      -->
+      <!-- Sidenav Link (Home)-->
+      <div class="sidenav-menu-heading">
+        DANISOFT SAS
+      </div>
+      <a class="nav-link" routerLink="/admin/home">
+        <div class="nav-link-icon">
+          <i data-feather="activity"></i>
+        </div>
+        Dashboards
+      </a>
+      <!-- Sidenav Accordion-->
+
+      <div *ngFor="let item of sidebarService.menu">
+        <a id="a{{item.id}}" class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#'+item.id" aria-expanded="false" [attr.aria-controls]="item.id">
+          <div class="nav-link-icon"><i [attr.data-feather]="item.icono"></i></div>
+          {{item.titulo}}
+          <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+
+        <div class="collapse" id="{{item.id}}" data-bs-parent="#accordionSidenav">
+          <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+            <a class="nav-link" *ngFor="let subMenuItem of item.submenu" [routerLink]="subMenuItem.url"
+              routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              {{subMenuItem.titulo }}
+            </a>
+          </nav>
+        </div>
+      </div>
+      <!--  <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+        data-bs-target="#collapseIngresos" aria-expanded="false" aria-controls="collapseIngresos">
+        <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
+        Ingresos
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+      </a>
+      <div class="collapse" id="collapseIngresos" data-bs-parent="#accordionSidenav">
+        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+          <a class="nav-link" href="#" onclick="getModule('IncomeInvoice', '#page-wrapper');">Facturación</a>
+          <a class="nav-link" href="#" onclick="getModule('income_pos', '#page-wrapper');">Facturación POS</a>
+          <a class="nav-link" href="#" onclick="getModule('income_accounts', '#page-wrapper');">Cajas</a>
+          <a class="nav-link" href="#" onclick="getModule('income_quotations', '#page-wrapper');">Cotizaciones</a>
+          <a class="nav-link" href="#" onclick="getModule('income_credit_notes', '#page-wrapper');">Nota Credito</a>
+          <a class="nav-link" href="#" onclick="getModule('income_order', '#page-wrapper');">Pedidos</a>
+        </nav>
+      </div>
+
+
+
+      <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+        data-bs-target="#collapseCompras" aria-expanded="false" aria-controls="collapseCompras">
+        <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
+        Compras
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+      </a>
+      <div class="collapse" id="collapseCompras" data-bs-parent="#accordionSidenav">
+        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+          <a class="nav-link" href="dashboard-1.html">
+            Default
+            <span class="badge bg-primary-soft text-primary ms-auto">Updated</span>
+          </a>
+          <a class="nav-link" href="dashboard-2.html">Multipurpose</a>
+          <a class="nav-link" href="dashboard-3.html">Affiliate</a>
+        </nav>
+      </div>
+
+      <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+        data-bs-target="#collapseInventa" aria-expanded="false" aria-controls="collapseInventa">
+        <div class="nav-link-icon"><i data-feather="align-justify"></i></div>
+        Inventario
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+      </a>
+      <div class="collapse" id="collapseInventa" data-bs-parent="#accordionSidenav">
+        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+          <a class="nav-link" href="dashboard-1.html">
+            Default
+            <span class="badge bg-primary-soft text-primary ms-auto">Updated</span>
+          </a>
+          <a class="nav-link" href="dashboard-2.html">Multipurpose</a>
+          <a class="nav-link" href="dashboard-3.html">Affiliate</a>
+        </nav>
+      </div>
+
+      <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+        data-bs-target="#collapseNomina" aria-expanded="false" aria-controls="collapseNomina">
+        <div class="nav-link-icon"><i data-feather="database"></i></div>
+        Nóminas
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+      </a>
+      <div class="collapse" id="collapseNomina" data-bs-parent="#accordionSidenav">
+        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+          <a class="nav-link" href="dashboard-1.html">
+            Default
+            <span class="badge bg-primary-soft text-primary ms-auto">Updated</span>
+          </a>
+          <a class="nav-link" href="dashboard-2.html">Multipurpose</a>
+          <a class="nav-link" href="dashboard-3.html">Affiliate</a>
+        </nav>
+      </div>
+
+      <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEvent"
+        aria-expanded="false" aria-controls="collapseEvent">
+        <div class="nav-link-icon"><i data-feather="calendar"></i></div>
+        Eventos RADIAN
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+      </a>
+      <div class="collapse" id="collapseEvent" data-bs-parent="#accordionSidenav">
+        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+          <a class="nav-link" href="dashboard-1.html">
+            Default
+            <span class="badge bg-primary-soft text-primary ms-auto">Updated</span>
+          </a>
+          <a class="nav-link" href="dashboard-2.html">Multipurpose</a>
+          <a class="nav-link" href="dashboard-3.html">Affiliate</a>
+        </nav>
+      </div>
+
+      <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+        data-bs-target="#collapseContad" aria-expanded="false" aria-controls="collapseContad">
+        <div class="nav-link-icon"><i data-feather="pen-tool"></i></div>
+        Contador
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+      </a>
+      <div class="collapse" id="collapseContad" data-bs-parent="#accordionSidenav">
+        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+          <a class="nav-link" href="dashboard-1.html">
+            Default
+            <span class="badge bg-primary-soft text-primary ms-auto">Updated</span>
+          </a>
+          <a class="nav-link" href="dashboard-2.html">Multipurpose</a>
+          <a class="nav-link" href="dashboard-3.html">Affiliate</a>
+        </nav>
+      </div>
+
+      <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+        data-bs-target="#collapseReport" aria-expanded="false" aria-controls="collapseReport">
+        <div class="nav-link-icon"><i data-feather="bar-chart-2"></i></div>
+        Reportes
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+      </a>
+      <div class="collapse" id="collapseReport" data-bs-parent="#accordionSidenav">
+        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+          <a class="nav-link" href="dashboard-1.html">
+            Default
+            <span class="badge bg-primary-soft text-primary ms-auto">Updated</span>
+          </a>
+          <a class="nav-link" href="dashboard-2.html">Multipurpose</a>
+          <a class="nav-link" href="dashboard-3.html">Affiliate</a>
+        </nav>
+      </div>
+
+      <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+        data-bs-target="#collapseSettings" aria-expanded="false" aria-controls="collapseSettings">
+        <div class="nav-link-icon"><i data-feather="settings"></i></div>
+        Configuraciones
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+      </a>
+      <div class="collapse" id="collapseSettings" data-bs-parent="#accordionSidenav">
+        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+          <a class="nav-link" href="dashboard-1.html">
+            Default
+            <span class="badge bg-primary-soft text-primary ms-auto">Updated</span>
+          </a>
+          <a class="nav-link" href="dashboard-2.html">Multipurpose</a>
+          <a class="nav-link" href="dashboard-3.html">Affiliate</a>
+        </nav>
+      </div>
+ -->
+    </div>
+  </div>
+  <!-- Sidenav Footer-->
+  <div id="pg-footer" class="sidenav-footer">
+    <div class="sidenav-footer-content">
+      <div class="sidenav-footer-subtitle">Logged in as:</div>
+      <div class="sidenav-footer-title">{{session_.name}}</div>
+    </div>
+  </div>
+</nav>

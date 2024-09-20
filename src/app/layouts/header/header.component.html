@@ -1,0 +1,40 @@
+<nav id="sidenavAccordion"
+  class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white">
+  <button id="sidebarToggle" (click)="toogleSidebar()"
+    class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0"><i data-feather="menu"></i>
+  </button>
+  <div class="navbar-brand pe-3 ps-4 ps-lg-2">PgFacture®</div>
+
+  <ul class="navbar-nav align-items-center ms-auto">
+    <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
+      <a id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false" class="btn btn-icon btn-transparent-dark dropdown-toggle">
+        <div class="avatar-online">
+          <img class="img-fluid " [src]="img_user">
+        </div>
+      </a>
+      <div aria-labelledby="navbarDropdownUserImage"
+        class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up">
+        <h6 class="dropdown-header d-flex align-items-center">
+          <img class="dropdown-user-img" [src]="img_user">
+          <div class="dropdown-user-details">
+            <div class="dropdown-user-details-name">{{username}}</div>
+            <div class="dropdown-user-details-email">{{email}}</div>
+          </div>
+        </h6>
+        <div class="dropdown-divider"></div>
+
+        <a class="dropdown-item cursor" (click)="logout()">
+          <div class="dropdown-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" class="feather feather-log-out">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg></div>
+          Salir
+        </a>
+      </div>
+    </li>
+  </ul>
+</nav>

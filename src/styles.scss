@@ -1,0 +1,277 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.bt {
+  white-space: nowrap;
+  display: inline-block;
+  height: 35px;
+  line-height: 38px;
+  padding: 0 12px;
+  -webkit-box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+  box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+  background: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  text-decoration: none;
+  -webkit-transition: all 0.15s ease;
+  transition: all 0.15s ease;
+  border: none;
+  cursor: pointer;
+}
+
+/* .autocomplete-container .input-container input {
+  width: 100% !important;
+  height: 37px !important;
+  padding: 3px 8px !important;
+  font-size: 1.15em !important;
+  line-height: 1.4 !important;
+  border-radius: 3px !important;
+} */
+.bt-autocomplete {
+  color: #506afb !important;
+  background: #ecf4ff !important;
+  height: 35px !important;
+  line-height: 20px !important;
+  padding: 7px 7px !important;
+  font-size: 0.8rem !important;
+}
+.icome-autocomplete {
+  height: 1.8rem !important;
+}
+
+.complete-selected {
+  color: #fff !important;
+  background-color: #506afb !important;
+}
+.suggestion_name {
+  white-space: initial;
+}
+
+span.autocomplete_company {
+  font-weight: 400 !important;
+  white-space: break-word;
+  margin-right: 10px;
+  float: left;
+}
+span.autocomplete_id {
+  font-weight: 400 !important;
+  float: right !important;
+}
+span.autocomplete_company {
+  font-weight: 400 !important;
+  white-space: break-word;
+  margin-right: 10px;
+  float: left;
+}
+/*
+.icome-autocomplete:hover,
+.autocomplete_id:hover,
+.autocomplete_company:hover,
+.autocomplete_company:hover {
+  color: #fff !important;
+  background-color: #506afb !important;
+}
+ */
+.auto-item-custumer:hover {
+  background-color: #506afb !important;
+  color: #fff !important;
+}
+@media (min-width: 320px) {
+  .bt-autocomplete {
+    width: 23% !important;
+    font-size: 0.7rem !important;
+  }
+  .div-autocomplete {
+    width: 77% !important;
+  }
+  .custumer-template {
+    width: 129% !important;
+  }
+}
+@media (min-width: 481px) {
+  .bt-autocomplete {
+    width: 23% !important;
+    font-size: 0.7rem !important;
+  }
+  .div-autocomplete {
+    width: 77% !important;
+  }
+  .custumer-template {
+    width: 129% !important;
+  }
+}
+@media (min-width: 641px) {
+  .bt-autocomplete {
+    width: 23% !important;
+    font-size: 0.7rem !important;
+  }
+  .div-autocomplete {
+    width: 77% !important;
+  }
+  .custumer-template {
+    width: 129% !important;
+  }
+}
+@media (min-width: 961px) {
+  .bt-autocomplete {
+    width: 23% !important;
+    font-size: 0.8rem !important;
+  }
+  .div-autocomplete {
+    width: 77% !important;
+  }
+  .custumer-template {
+    width: 129% !important;
+  }
+}
+@media (min-width: 1025px) {
+  .bt-autocomplete {
+    width: 23% !important;
+    font-size: 0.8rem !important;
+  }
+  .div-autocomplete {
+    width: 77% !important;
+  }
+  .custumer-template {
+    width: 129% !important;
+  }
+}
+@media (min-width: 1281px) {
+  .bt-autocomplete {
+    width: 23% !important;
+    font-size: 0.8rem !important;
+  }
+  .div-autocomplete {
+    width: 77% !important;
+  }
+  .custumer-template {
+    width: 129% !important;
+  }
+}
+
+.pill-outline-blue {
+  background-color: white;
+  border: 2px #3886fe solid;
+  color: #3886fe;
+  font-weight: 600;
+}
+.pill-tiny {
+  font-size: 0.75rem !important;
+}
+.pill {
+  font-size: 1.1rem;
+  background: #e6e6e6;
+  padding: 2px 5px;
+  border-radius: 7px;
+  display: inline-block;
+}
+.float-right {
+  float: right !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.input-group-joined {
+  height: 35px;
+}
+.input-group-solid {
+  font-size: 0.98rem !important;
+  background-color: #fff !important;
+  border: 1px solid rgba(0, 0, 0, 0.09) !important;
+}
+.pointer {
+  cursor: pointer;
+}
+
+.auto-item {
+  display: block !important;
+  align-items: initial !important;
+  span,
+  p,
+  i {
+    color: #212529;
+    text-align: inherit;
+  }
+  .complete-selected {
+    color: #fff !important;
+    background-color: #506afb !important;
+  }
+}
+
+.auto-item:hover {
+  background-color: #506afb !important;
+  color: #fff !important;
+  span,
+  p,
+  i {
+    color: #fff !important;
+  }
+  .pill-tiny {
+    color: #506afb !important;
+  }
+}
+
+.float-right {
+  float: right !important;
+}
+
+.pill {
+  font-size: 1.1rem;
+  background: white !important;
+  padding: 2px 5px;
+  border-radius: 7px;
+  display: inline-block;
+}
+
+.pill-tiny {
+  font-size: 0.7rem !important;
+  margin-top: -33px !important;
+}
+
+.pill-outline-blue {
+  background-color: white;
+  border: 2px #3886fe solid;
+  color: #3886fe;
+  font-weight: 600;
+}
+
+.pill-outline-blue {
+  background-color: white;
+  border: 2px #3886fe solid;
+  color: #3886fe;
+  font-weight: 600;
+}
+
+.suggestion_name {
+  white-space: initial;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+}
+
+.clickable {
+  cursor: pointer;
+  text-decoration: underline solid;
+  color: blue;
+  text-underline-position: under;
+}
+.autocomplete-container .input-container input {
+  width: 100% !important;
+  padding: 3px 8px !important;
+  font-size: 0.95em !important;
+  line-height: 1.4 !important;
+  border-radius: 3px !important;
+}
