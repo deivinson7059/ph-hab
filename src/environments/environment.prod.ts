@@ -2,8 +2,8 @@ const isProd = true;
 
 export const environment = {
   production: isProd,
- dian: {
-    domain: 'http://154.38.165.62:8020',
+  dian: {
+    domain: 'https://apidian.monaros.com.co',
   },
   session: {
     name: 'MONAROS SAS',
