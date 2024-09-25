@@ -17,6 +17,7 @@ import {
   InvoiceEeqdocs,
   Payroll,
   PayrollAdjustment,
+  PayrollApiResponse,
   resolution,
   ResponseApiFe,
   saveEmployeSettings,
@@ -26,7 +27,7 @@ import {
   sofwarePayrollSettingsData,
   sofwareSettingsData,
 } from '../interfaces/configuration-admin.interface';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 const { dian } = environment;
 @Injectable({
   providedIn: 'root',
@@ -131,32 +132,65 @@ export class ConfigurationAdminService {
     });
   }
 
-  sendPayroll(
+  sendPayroll__(
     data: Payroll,
     testId: string,
     hab: boolean = false
-  ): Observable<any> {
+  ): Observable<PayrollApiResponse> {
     let url: string =
       hab === true
         ? `${dian.domain}/api/ubl2.1/payroll/${testId}`
         : `${dian.domain}/api/ubl2.1/payroll`;
-    return this.httpService.post(`${url}`, data, {
+    return this.httpService.post<PayrollApiResponse>(`${url}`, data, {
       headers: this.apiHeaders,
     });
   }
 
-  sendPayrollAdjustment(
+  sendPayroll(
+    data: Payroll,
+    testId: string,
+    hab: boolean = false
+  ): Promise<PayrollApiResponse> {
+    let url: string =
+      hab === true
+        ? `${dian.domain}/api/ubl2.1/payroll/${testId}`
+        : `${dian.domain}/api/ubl2.1/payroll`;
+
+    return lastValueFrom(
+      this.httpService.post<PayrollApiResponse>(`${url}`, data, {
+        headers: this.apiHeaders,
+      })
+    );
+  }
+
+  sendPayrollAdjustment___(
     data: PayrollAdjustment,
     testId: string,
     hab: boolean = false
-  ): Observable<any> {
+  ): Observable<PayrollApiResponse> {
     let url: string =
       hab === true
         ? `${dian.domain}/api/ubl2.1/payroll-adjust-note/${testId}`
         : `${dian.domain}/api/ubl2.1/payroll-adjust-note`;
-    return this.httpService.post(`${url}`, data, {
+    return this.httpService.post<PayrollApiResponse>(`${url}`, data, {
       headers: this.apiHeaders,
     });
+  }
+  sendPayrollAdjustment(
+    data: PayrollAdjustment,
+    testId: string,
+    hab: boolean = false
+  ): Promise<PayrollApiResponse> {
+    let url: string =
+      hab === true
+        ? `${dian.domain}/api/ubl2.1/payroll-adjust-note/${testId}`
+        : `${dian.domain}/api/ubl2.1/payroll-adjust-note`;
+
+    return lastValueFrom(
+      this.httpService.post<PayrollApiResponse>(`${url}`, data, {
+        headers: this.apiHeaders,
+      })
+    );
   }
 
   configEnvironment(

@@ -98,6 +98,11 @@ export interface EmployeSettings {
   department_id: number | null;
   municipality: Municipality | null;
   municipality_id: number | null;
+  mail_host: string | null;
+  mail_port: string | null;
+  mail_username: string | null;
+  mail_password: string | null;
+  mail_encryption: "tls" | "ssl" | null;
 }
 
 export interface sofwareFeSettings {
@@ -142,6 +147,8 @@ export interface sofwarePayrolltestIdSettings {
   testIdpayroll: string;
   fNumber: number;
   limit: number;
+  cune: string;
+  predecessor_number: number;
 }
 
 export interface sofwareSettingsData {
@@ -164,6 +171,11 @@ export interface saveEmployeSettings {
   address: string;
   phone: string;
   email: string;
+  mail_host?: string;
+  mail_port?: string;
+  mail_username?: string;
+  mail_password?: string;
+  mail_encryption?: string;
 }
 
 export interface ApiSoftwareResponse {
@@ -367,25 +379,26 @@ export interface LegalMonetaryTotals {
   tax_exclusive_amount: number;
   tax_inclusive_amount: number;
   payable_amount: number;
-  charge_total_amount: number;
+  allowance_total_amount?: number;
+  charge_total_amount?: number;
 }
 
 export interface TaxTotal {
-  tax_id: string;
+  tax_id: string | number;
   tax_amount: string;
   taxable_amount: string;
   percent: string;
 }
 
 export interface InvoiceLineTaxTotal {
-  tax_id: string;
+  tax_id: string | number;
   tax_amount: number;
   taxable_amount: number;
   percent: string;
 }
 
 export interface AllowanceCharge {
-  discount_id: string;
+  discount_id?: string;
   charge_indicator: boolean;
   allowance_charge_reason: string;
   amount: number;
@@ -398,12 +411,12 @@ export interface InvoiceLine {
   line_extension_amount: number;
   free_of_charge_indicator: boolean;
   tax_totals: InvoiceLineTaxTotal[];
-  allowance_charges: AllowanceCharge[];
+  allowance_charges?: AllowanceCharge[];
   description: string;
   notes: string | null;
   code: string;
   type_item_identification_id: number;
-  price_amount: string;
+  price_amount: string | number;
   base_quantity: string;
 }
 
@@ -432,7 +445,7 @@ export interface Invoice {
   legal_monetary_totals: LegalMonetaryTotals;
   tax_totals: TaxTotal[];
   invoice_lines: InvoiceLine[];
-  allowance_charges: GlobalAllowanceCharge[];
+  allowance_charges?: GlobalAllowanceCharge[];
 }
 
 export interface InvoiceEeqdocs {
@@ -455,7 +468,7 @@ export interface InvoiceEeqdocs {
   legal_monetary_totals: LegalMonetaryTotals;
   tax_totals: TaxTotal[];
   invoice_lines: InvoiceLine[];
-  allowance_charges: GlobalAllowanceCharge[];
+  allowance_charges?: GlobalAllowanceCharge[];
 }
 export interface BuyerBenefits {
   code: string;
@@ -537,8 +550,25 @@ export interface TimestampAttributes {
 }
 
 export interface Body {
-  SendBillSyncResponse: SendBillSyncResponse;
+  SendTestSetAsyncResponse?: SendTestSetAsyncResponse;
+  SendBillSyncResponse?: SendBillSyncResponse;
 }
+
+export interface SendTestSetAsyncResponse {
+  SendTestSetAsyncResult: SendTestSetAsyncResult;
+}
+
+export interface SendTestSetAsyncResult {
+  ErrorMessageList: ErrorMessageList;
+  ZipKey: string;
+}
+
+export interface ErrorMessageList {
+  _attributes: {
+    nil: string;
+  };
+}
+
 
 export interface SendBillSyncResponse {
   SendBillSyncResult: SendBillSyncResult;
@@ -664,11 +694,11 @@ export interface PayrollAdjustment {
   consecutive: number;
   payroll_period_id: string;
   notes: string | null;
-  worker: Worker;
-  payment: Payment;
-  payment_dates: PaymentDate[];
-  accrued: Accrued;
-  deductions: Deductions;
+  worker?: Worker;
+  payment?: Payment;
+  payment_dates?: PaymentDate[];
+  accrued?: Accrued;
+  deductions?: Deductions;
 }
 
 
@@ -785,3 +815,52 @@ export interface ApiNumberingResponse {
   certificate_days_left: number;
 }
 
+export interface PayrollApiResponse {
+  message: string;
+  ResponseDian: {
+    Envelope: {
+      Header: {
+        Action: {
+          _attributes: {
+            mustUnderstand: string;
+          };
+          _value: string;
+        };
+        Security: {
+          _attributes: {
+            mustUnderstand: string;
+          };
+          Timestamp: {
+            _attributes: {
+              Id: string;
+            };
+            Created: string;
+            Expires: string;
+          };
+        };
+      };
+      Body: {
+        SendTestSetAsyncResponse: {
+          SendTestSetAsyncResult: {
+            ErrorMessageList: {
+              _attributes: {
+                nil: string;
+              };
+            };
+            ZipKey: string;
+          };
+        };
+      };
+    };
+  };
+  payrollxml: string;
+  zippayrollxml: string;
+  unsignedpayrollxml: string;
+  reqni: string;
+  rptani: string;
+  urlpayrollxml: string;
+  urlpayrollpdf: string;
+  cune: string;
+  QRStr: string;
+  certificate_days_left: number;
+}

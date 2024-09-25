@@ -155,6 +155,12 @@ export class ConfigurationAdminComponent implements OnInit {
     municipality: new FormControl('', [Validators.required]),
     type_document: new FormControl('', [Validators.required]),
     type_liability: new FormControl('', [Validators.required]),
+
+    mail_host: new FormControl(''),
+    mail_port: new FormControl(''),
+    mail_username: new FormControl(''),
+    mail_password: new FormControl(''),
+    mail_encryption: new FormControl(''),
   });
 
   settingsCompany_: settingsCompany = {
@@ -187,6 +193,11 @@ export class ConfigurationAdminComponent implements OnInit {
     department_id: null,
     municipality: null,
     municipality_id: null,
+    mail_host: null,
+    mail_port: null,
+    mail_username: null,
+    mail_password: null,
+    mail_encryption: null,
   };
 
   @ViewChild('autoIdentification') autoIdentification: any;
@@ -404,6 +415,19 @@ export class ConfigurationAdminComponent implements OnInit {
     return y > 1 ? 11 - y : y;
   };
 
+  swCorreo: boolean = false;
+
+  onCorreoChange(event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.swCorreo = isChecked;
+
+    this.employeSettingsSelected.mail_host = null;
+    this.employeSettingsSelected.mail_port = null;
+    this.employeSettingsSelected.mail_username = null;
+    this.employeSettingsSelected.mail_password = null;
+    this.employeSettingsSelected.mail_encryption = null;
+  }
+
   onConfigEmploye() {
     if (this.configEmployeForm.controls['identification_number'].invalid) {
       Swal.fire({
@@ -549,10 +573,75 @@ export class ConfigurationAdminComponent implements OnInit {
       business_name: this.employeSettingsSelected.business_name.toUpperCase(),
       merchant_registration: this.employeSettingsSelected.merchant_registration,
       municipality_id: this.employeSettingsSelected.municipality_id,
-      address: this.employeSettingsSelected.address,
+      address: this.employeSettingsSelected.address.toUpperCase(),
       phone: this.employeSettingsSelected.phone,
       email: this.employeSettingsSelected.email.toLowerCase(),
     };
+
+    if (this.swCorreo) {
+      if (
+        this.employeSettingsSelected.mail_host === null ||
+        this.employeSettingsSelected.mail_host === ''
+      ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ingrese un servidor de correo válido',
+        });
+        return;
+      }
+
+      if (
+        this.employeSettingsSelected.mail_port === null ||
+        this.employeSettingsSelected.mail_port === ''
+      ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ingrese un puerto de correo válido',
+        });
+        return;
+      }
+
+      if (
+        this.employeSettingsSelected.mail_username === null ||
+        this.employeSettingsSelected.mail_username === ''
+      ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ingrese un usuario de correo válido',
+        });
+        return;
+      }
+
+      if (
+        this.employeSettingsSelected.mail_password === null ||
+        this.employeSettingsSelected.mail_password === ''
+      ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ingrese una contraseña de correo válida',
+        });
+        return;
+      }
+
+      if (this.employeSettingsSelected.mail_encryption === null) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ingrese un tipo de encriptación de correo válido',
+        });
+        return;
+      }
+
+      data.mail_host = this.employeSettingsSelected.mail_host;
+      data.mail_port = this.employeSettingsSelected.mail_port;
+      data.mail_username = this.employeSettingsSelected.mail_username;
+      data.mail_password = this.employeSettingsSelected.mail_password;
+      data.mail_encryption = this.employeSettingsSelected.mail_encryption;
+    }
 
     Swal.fire({
       title: '¿Está seguro de guardar la configuración?',
@@ -961,58 +1050,104 @@ export class ConfigurationAdminComponent implements OnInit {
       duration_measure: '0',
     },
     legal_monetary_totals: {
-      line_extension_amount: 5092.59,
-      tax_exclusive_amount: 5092.59,
-      tax_inclusive_amount: 5500,
-      payable_amount: 6050,
-      charge_total_amount: 550,
+      line_extension_amount: 7310924.175,
+      tax_exclusive_amount: 7310924.175,
+      tax_inclusive_amount: 8700000.0,
+      allowance_total_amount: 0.0,
+      payable_amount: 8700000.0,
     },
     tax_totals: [
       {
-        tax_id: '4',
-        tax_amount: '407.41',
-        taxable_amount: '5092.59',
-        percent: '8.00',
+        tax_id: 1,
+        tax_amount: '1389075.630',
+        percent: '19',
+        taxable_amount: '7310924.175',
       },
     ],
     invoice_lines: [
       {
         unit_measure_id: 70,
-        invoiced_quantity: '1.00',
-        line_extension_amount: 5092.59,
+        invoiced_quantity: '1',
+        line_extension_amount: 798319.327,
         free_of_charge_indicator: false,
-        tax_totals: [
-          {
-            tax_id: '4',
-            tax_amount: 407.41,
-            taxable_amount: 5092.59,
-            percent: '8.00',
-          },
-        ],
         allowance_charges: [
           {
-            discount_id: '1',
             charge_indicator: false,
             allowance_charge_reason: 'DESCUENTO GENERAL',
-            amount: 0,
-            base_amount: 5092.59,
+            amount: 50000.0,
+            base_amount: 1000000.0,
           },
         ],
-        description: 'JUGO COROZO',
-        notes: null,
-        code: 'DAN0028',
+        tax_totals: [
+          {
+            tax_id: 1,
+            tax_amount: 151680.673,
+            taxable_amount: 798319.327,
+            percent: '19.00',
+          },
+        ],
+        description: 'ARTICULO NRO 1',
+        notes: 'ESTA ES UNA PRUEBA DE NOTA DE DETALLE DE LINEA.',
+        code: 'ART1',
         type_item_identification_id: 4,
-        price_amount: '5092.59',
-        base_quantity: '1.00',
+        price_amount: 1000000.0,
+        base_quantity: '1',
       },
-    ],
-    allowance_charges: [
       {
-        discount_id: 13,
-        charge_indicator: true,
-        allowance_charge_reason: 'PROPINAS U OTROS',
-        amount: 550,
-        base_amount: 5500,
+        unit_measure_id: 70,
+        invoiced_quantity: '1',
+        line_extension_amount: 1554621.848,
+        free_of_charge_indicator: false,
+        allowance_charges: [
+          {
+            charge_indicator: false,
+            allowance_charge_reason: 'DESCUENTO GENERAL',
+            amount: 150000.0,
+            base_amount: 2000000.0,
+          },
+        ],
+        tax_totals: [
+          {
+            tax_id: 1,
+            tax_amount: 295378.152,
+            taxable_amount: 1554621.848,
+            percent: '19.00',
+          },
+        ],
+        description: 'ARTICULO NRO 2',
+        notes: 'ESTA ES UNA PRUEBA DE NOTA DE DETALLE DE LINEA.',
+        code: 'ART2',
+        type_item_identification_id: 4,
+        price_amount: 2000000.0,
+        base_quantity: '1',
+      },
+      {
+        unit_measure_id: 70,
+        invoiced_quantity: '2',
+        line_extension_amount: 4957983.193,
+        free_of_charge_indicator: false,
+        allowance_charges: [
+          {
+            charge_indicator: false,
+            allowance_charge_reason: 'DESCUENTO GENERAL',
+            amount: 100000.0,
+            base_amount: 6000000.0,
+          },
+        ],
+        tax_totals: [
+          {
+            tax_id: 1,
+            tax_amount: 942016.807,
+            taxable_amount: 4957983.193,
+            percent: '19.00',
+          },
+        ],
+        description: 'ARTICULO NRO 3',
+        notes: 'ESTA ES UNA PRUEBA DE NOTA DE DETALLE DE LINEA.',
+        code: 'ART3',
+        type_item_identification_id: 4,
+        price_amount: 3000000.0,
+        base_quantity: '1',
       },
     ],
   };
@@ -1047,25 +1182,16 @@ export class ConfigurationAdminComponent implements OnInit {
           console.log(res);
           this.spinnerService.hide();
 
-          if (res.success === true) {
-            // Acceder a IsValid
-            const isValid =
-              res.ResponseDian.Envelope.Body.SendBillSyncResponse
-                .SendBillSyncResult.IsValid;
-            //console.log(isValid);
+          const nilValue =
+            res.ResponseDian.Envelope.Body.SendTestSetAsyncResponse!
+              .SendTestSetAsyncResult.ErrorMessageList._attributes.nil;
 
-            if (isValid === 'true') {
-              this.toastrService.success(res.message, 'success Habilitar FE');
-              this.isSaveHabFe = true;
-              this.QRStrFe = this.formatQRStr(res.QRStr);
-            } else if (isValid === 'false') {
-              const errors =
-                res.ResponseDian.Envelope.Body.SendBillSyncResponse
-                  .SendBillSyncResult.ErrorMessage.string[0];
-              Swal.fire('Error!', errors, 'error');
-            }
+          if (nilValue === 'true') {
+            this.toastrService.success(res.message, 'success Habilitar FE');
+            this.isSaveHabFe = true;
+            this.QRStrFe = this.formatQRStr(res.QRStr);
           } else {
-            this.toastrService.error(res.message, 'error');
+            Swal.fire('Error!', 'Error al habilitar FE. ', 'error');
           }
         },
         (error) => {
@@ -1290,8 +1416,8 @@ export class ConfigurationAdminComponent implements OnInit {
       software_name: 'PgFacture®',
     },
     buyer_benefits: {
-      code: '1129582163',
-      name: 'DEIVINSON SCHMALBACH',
+      code: '222222222222',
+      name: 'CONSUMIDOR FINAL',
       points: '100',
     },
     cash_information: {
@@ -1323,58 +1449,39 @@ export class ConfigurationAdminComponent implements OnInit {
       duration_measure: '0',
     },
     legal_monetary_totals: {
-      line_extension_amount: 5092.59,
-      tax_exclusive_amount: 5092.59,
-      tax_inclusive_amount: 5500,
-      payable_amount: 6050,
-      charge_total_amount: 550,
+      line_extension_amount: 840336.134,
+      tax_exclusive_amount: 840336.134,
+      tax_inclusive_amount: 1000000.0,
+      payable_amount: 1000000.0,
     },
     tax_totals: [
       {
-        tax_id: '4',
-        tax_amount: '407.41',
-        taxable_amount: '5092.59',
-        percent: '8.00',
+        tax_id: 1,
+        tax_amount: '159663.865',
+        percent: '19.0',
+        taxable_amount: '840336.134',
       },
     ],
     invoice_lines: [
       {
         unit_measure_id: 70,
-        invoiced_quantity: '1.00',
-        line_extension_amount: 5092.59,
+        invoiced_quantity: '1',
+        line_extension_amount: 840336.134,
         free_of_charge_indicator: false,
         tax_totals: [
           {
-            tax_id: '4',
-            tax_amount: 407.41,
-            taxable_amount: 5092.59,
-            percent: '8.00',
+            tax_id: 1,
+            tax_amount: 159663.865,
+            taxable_amount: 840336.134,
+            percent: '19.00',
           },
         ],
-        allowance_charges: [
-          {
-            discount_id: '1',
-            charge_indicator: false,
-            allowance_charge_reason: 'DESCUENTO GENERAL',
-            amount: 0,
-            base_amount: 5092.59,
-          },
-        ],
-        description: 'JUGO COROZO',
-        notes: null,
-        code: 'DAN0028',
+        description: 'COMISION POR SERVICIOS',
+        notes: 'ESTA ES UNA PRUEBA DE NOTA DE DETALLE DE LINEA.',
+        code: 'COMISION',
         type_item_identification_id: 4,
-        price_amount: '5092.59',
-        base_quantity: '1.00',
-      },
-    ],
-    allowance_charges: [
-      {
-        discount_id: 13,
-        charge_indicator: true,
-        allowance_charge_reason: 'PROPINAS U OTROS',
-        amount: 550,
-        base_amount: 5500,
+        price_amount: 1000000.0,
+        base_quantity: '1',
       },
     ],
   };
@@ -1411,27 +1518,30 @@ export class ConfigurationAdminComponent implements OnInit {
         (res) => {
           console.log('configHabEeqdocs::', res);
           this.spinnerService.hide();
-          const isValid =
-            res.ResponseDian.Envelope.Body.SendBillSyncResponse
-              .SendBillSyncResult.IsValid;
 
-          ///console.log('isValid::', isValid);
-          const StatusMessage =
-            res.ResponseDian.Envelope.Body.SendBillSyncResponse
-              .SendBillSyncResult.StatusMessage;
+          const nilValue =
+            res.ResponseDian.Envelope.Body.SendTestSetAsyncResponse!
+              .SendTestSetAsyncResult.ErrorMessageList._attributes.nil;
 
-          if (isValid === 'true') {
-            this.toastrService.success(StatusMessage, 'success Habilitar FE');
+          if (nilValue === 'true') {
+            this.toastrService.success(
+              res.message,
+              'success Habilitar Eeqdocs'
+            );
             this.isSaveHabEeqdocs = true;
             this.QRStrEeqdocs = this.formatQRStr(res.QRStr);
           } else {
-            Swal.fire('Error!', StatusMessage, 'error');
+            Swal.fire('Error!', 'Error al habilitar FE. ', 'error');
           }
         },
         (error) => {
           console.log('error::', error);
           this.spinnerService.hide();
-          Swal.fire('Error!', 'Ha ocurrido un error al habilitar FE.', 'error');
+          Swal.fire(
+            'Error!',
+            'Ha ocurrido un error al habilitar Eeqdocs.',
+            'error'
+          );
         }
       );
   }
@@ -1446,6 +1556,7 @@ export class ConfigurationAdminComponent implements OnInit {
   isSaveResolPayroll: boolean = false;
   isSaveResolPayrollNote: boolean = false;
   isSaveHabPayroll: boolean = false;
+  isSaveHabPayrollNote: boolean = false;
 
   sofwarePayrollSettings_: sofwarePayrollSettings = {
     idpayroll: '',
@@ -1649,12 +1760,15 @@ export class ConfigurationAdminComponent implements OnInit {
     testIdpayroll: new FormControl('', [Validators.required]),
     fNumber: new FormControl('', [Validators.required]),
     limit: new FormControl('', [Validators.required]),
+    cude: new FormControl('', [Validators.required]),
   });
 
   sofwarePayrolltestIdSettings_: sofwarePayrolltestIdSettings = {
     testIdpayroll: '',
     fNumber: 1,
     limit: 4,
+    cune: '',
+    predecessor_number: 0,
   };
 
   payroll: Payroll = {
@@ -1668,9 +1782,9 @@ export class ConfigurationAdminComponent implements OnInit {
     },
     period: {
       admision_date: this.getCurrentDate(),
-      settlement_start_date: '2024-03-16',
-      settlement_end_date: '2024-03-31',
-      worked_time: '120.00',
+      settlement_start_date: '2021-07-01',
+      settlement_end_date: '2021-07-31',
+      worked_time: '785.00',
       issue_date: this.getCurrentDate(),
     },
     sendmail: false,
@@ -1679,7 +1793,7 @@ export class ConfigurationAdminComponent implements OnInit {
     prefix: 'NIM',
     consecutive: 100,
     payroll_period_id: '4',
-    notes: null,
+    notes: 'PRUEBA DE ENVIO DE NOMINA ELECTRONICA',
     worker: {
       type_worker_id: 1,
       sub_type_worker_id: 1,
@@ -1694,14 +1808,14 @@ export class ConfigurationAdminComponent implements OnInit {
       middle_name: null,
       address: 'BRR LIMONAR MZ 6 CS 3 ET 1',
       integral_salarary: false,
-      salary: 1160000.0,
+      salary: 1500000.0,
       email: 'admin@gmail.com',
     },
     payment: {
       payment_method_id: 10,
-      bank_name: '',
-      account_type: '',
-      account_number: '',
+      bank_name: 'BANCO DAVIVIENDA',
+      account_type: 'AHORROS',
+      account_number: '126070603280',
     },
     payment_dates: [
       {
@@ -1709,17 +1823,17 @@ export class ConfigurationAdminComponent implements OnInit {
       },
     ],
     accrued: {
-      worked_days: '15',
-      salary: '580000.00',
-      accrued_total: '661000.00',
-      transportation_allowance: '81000.00',
+      worked_days: '30',
+      salary: '750000.00',
+      transportation_allowance: '115000.00',
+      accrued_total: '859000.00',
     },
     deductions: {
       eps_type_law_deductions_id: 1,
-      eps_deduction: '23200.00',
+      eps_deduction: '60000.00',
       pension_type_law_deductions_id: 5,
-      pension_deduction: '23200.00',
-      deductions_total: '46400.00',
+      pension_deduction: '60000.00',
+      deductions_total: '120000.00',
     },
   };
 
@@ -1729,15 +1843,16 @@ export class ConfigurationAdminComponent implements OnInit {
     foot_note: null,
     type_note: 1,
     predecessor: {
-      predecessor_number: 1,
-      predecessor_cune: '',
+      predecessor_number: 100,
+      predecessor_cune:
+        'f82fc0af4e13aa1b12e532471f437fa5e56595bfa99a36b7d102e70c827ff174cd20977fec3e0c5a904ff1c4c3a44364',
       predecessor_issue_date: this.getCurrentDate(),
     },
     period: {
       admision_date: this.getCurrentDate(),
-      settlement_start_date: '2023-05-01',
-      settlement_end_date: '2023-05-15',
-      worked_time: '120.00',
+      settlement_start_date: '2021-07-01',
+      settlement_end_date: '2021-07-15',
+      worked_time: '15.00',
       issue_date: this.getCurrentDate(),
     },
     sendmail: false,
@@ -1761,14 +1876,14 @@ export class ConfigurationAdminComponent implements OnInit {
       middle_name: null,
       address: 'BRR LIMONAR MZ 6 CS 3 ET 1',
       integral_salarary: false,
-      salary: 1000000,
+      salary: 1500000.0,
       email: 'admin@gmail.com',
     },
     payment: {
-      payment_method_id: 42,
-      bank_name: 'BANCO CAJA SOLCIAL',
-      account_type: 'AHORRO',
-      account_number: '1654564895',
+      payment_method_id: 10,
+      bank_name: 'BANCO DAVIVIENDA',
+      account_type: 'AHORROS',
+      account_number: '126070603280',
     },
     payment_dates: [
       {
@@ -1776,25 +1891,26 @@ export class ConfigurationAdminComponent implements OnInit {
       },
     ],
     accrued: {
-      worked_days: '15',
-      salary: '500000.00',
-      transportation_allowance: '58586.00',
-      accrued_total: '518586.00',
+      worked_days: '30',
+      salary: '750000.00',
+      transportation_allowance: '115000.00',
+      accrued_total: '859000.00',
     },
     deductions: {
       eps_type_law_deductions_id: 1,
-      eps_deduction: '20000.00',
+      eps_deduction: '60000.00',
       pension_type_law_deductions_id: 5,
-      pension_deduction: '20000.00',
-      deductions_total: '40000.00',
+      pension_deduction: '60000.00',
+      deductions_total: '120000.00',
     },
   };
+  async onHabilitarPayroll() {
+    await this.onHabilitarPayroll_();
+    this.isSaveHabPayroll = true;
+    this.toastrService.success('Nóminas habilitadas con éxito.', 'success');
+  }
 
-  payrolls: any[] = [];
-  payrollAdjustments: any[] = [];
-  cufeArray: string[] = [];
-
-  onHabilitarPayroll() {
+  async onHabilitarPayroll_() {
     if (this.configSofwareTestIdFormPayroll.controls['testIdpayroll'].invalid) {
       Swal.fire({
         icon: 'error',
@@ -1822,115 +1938,71 @@ export class ConfigurationAdminComponent implements OnInit {
       return;
     }
 
-    const payrollObservables = [];
     const { fNumber, limit } = this.sofwarePayrolltestIdSettings_;
     const prefix = this.resolutionPayroll.prefix;
     this.payroll.consecutive = fNumber;
 
     for (let i = 0; i < limit; i++) {
-      const currentNumber = fNumber + i; // Número actual de recibo
-
+      const currentNumber = fNumber + i;
       this.payroll.consecutive = currentNumber;
       this.payroll.prefix = prefix;
 
       this.spinnerService.show();
 
-      payrollObservables.push(
-        this.configurationAdminService
-          .sendPayroll(
-            this.payroll,
-            this.sofwarePayrolltestIdSettings_.testIdpayroll,
-            true
-          )
-          .toPromise()
-          .then((res) => {
-            console.log('Nómina enviada con éxito.', res);
-            const isValid =
-              res.ResponseDian.Envelope.Body.SendNominaSyncResponse
-                .SendNominaSyncResult.IsValid;
+      try {
+        const res = await this.configurationAdminService.sendPayroll(
+          this.payroll,
+          this.sofwarePayrolltestIdSettings_.testIdpayroll,
+          true
+        );
 
-            const StatusMessage =
-              res.ResponseDian.Envelope.Body.SendNominaSyncResponse
-                .SendNominaSyncResult.StatusMessage;
+        const nilValue =
+          res.ResponseDian.Envelope.Body.SendTestSetAsyncResponse
+            .SendTestSetAsyncResult.ErrorMessageList._attributes.nil;
 
-            if (isValid === 'true') {
-              const cufe =
-                res.ResponseDian.Envelope.Body.SendNominaSyncResponse
-                  .SendNominaSyncResult.XmlDocumentKey;
-              this.cufeArray.push(cufe); // Almacenar el CUFE en el array
+        if (nilValue === 'true') {
+          console.log('Nómina enviada:', res);
 
-              // Llenar el array con el prefijo, número, CUFE y tipo 'Nomina'
-              this.payrolls.push({
-                prefix,
-                number: currentNumber,
-                cufe,
-                type: 'Nomina',
-              });
-            } else {
-              Swal.fire('Error!', StatusMessage, 'error');
-            }
-          })
-      );
-    }
-
-    // Cuando todas las nóminas hayan sido enviadas
-    Promise.all(payrollObservables).then(() => {
-      console.log('Todas las nóminas han sido enviadas');
-      // Empezar a enviar los ajustes
-      const firstCufe = this.cufeArray[0]; // Usar el primer CUFE para el ajuste
-      const { fNumber, limit } = this.sofwarePayrolltestIdSettings_;
-      const prefix = this.resolutionPayrollNote.prefix;
-
-      this.payrollAdjustment.consecutive = fNumber;
-
-      // Enviar `limit` nóminas de ajuste
-      for (let i = 0; i < limit; i++) {
-        const currentNumber = fNumber + i;
-        this.payrollAdjustment.consecutive = currentNumber;
-        this.payrollAdjustment.prefix = prefix;
-
-        this.payrollAdjustment.predecessor.predecessor_cune = firstCufe; // Usar el primer CUFE
-
-        this.configurationAdminService
-          .sendPayrollAdjustment(
-            this.payrollAdjustment,
-            this.sofwarePayrolltestIdSettings_.testIdpayroll,
-            true
-          )
-          .subscribe(
-            (res) => {
-              console.log('Nómina de ajuste enviada con éxito.', res);
-              const isValid =
-                res.ResponseDian.Envelope.Body.SendNominaSyncResponse
-                  .SendNominaSyncResult.IsValid;
-
-              const StatusMessage =
-                res.ResponseDian.Envelope.Body.SendNominaSyncResponse
-                  .SendNominaSyncResult.StatusMessage;
-
-              if (isValid === 'true') {
-                const cufe =
-                  res.ResponseDian.Envelope.Body.SendNominaSyncResponse
-                    .SendNominaSyncResult.XmlDocumentKey;
-                this.cufeArray.push(cufe); // Almacenar el CUFE en el array
-
-                // Llenar el array con el prefijo, número, CUFE y tipo 'Nomina'
-                this.payrollAdjustments.push({
-                  prefix,
-                  number: currentNumber,
-                  cufe: cufe,
-                  type: 'Ajuste',
-                });
-              } else {
-                Swal.fire('Error!', StatusMessage, 'error');
-              }
-            },
-            (error) => {
-              console.error('Error al enviar la nómina de ajuste:', error);
-            }
-          );
+          await this.onHabilitarPayrollNote(res.cune, currentNumber);
+        } else {
+          console.log('Error al enviar la nómina:', res);
+        }
+      } catch (error) {
+        console.error('Error al enviar la nómina:', error);
+      } finally {
+        this.spinnerService.hide();
       }
-    });
+    }
+  }
+
+  async onHabilitarPayrollNote(cune: string, consecutive: number) {
+    this.payrollAdjustment.consecutive = consecutive;
+    this.payrollAdjustment.prefix = this.resolutionPayrollNote.prefix;
+
+    this.payrollAdjustment.predecessor.predecessor_cune = cune;
+    this.payrollAdjustment.predecessor.predecessor_number = consecutive;
+
+    try {
+      const res = await this.configurationAdminService.sendPayrollAdjustment(
+        this.payrollAdjustment,
+        this.sofwarePayrolltestIdSettings_.testIdpayroll,
+        true
+      );
+
+      const nilValue =
+        res.ResponseDian.Envelope.Body.SendTestSetAsyncResponse
+          .SendTestSetAsyncResult.ErrorMessageList._attributes.nil;
+
+      if (nilValue === 'true') {
+        console.log('Nómina de ajuste enviada:', res);
+        //this.sofwarePayrolltestIdSettings_.cude = res.cune;
+        //this.sofwarePayrolltestIdSettings_.predecessor_number = currentNumber;
+      } else {
+        console.log('Error al enviar la nómina de ajuste:', res);
+      }
+    } catch (error) {
+      console.error('Error al enviar la nómina de ajuste:', error);
+    }
   }
 
   /**
@@ -2265,8 +2337,11 @@ export class ConfigurationAdminComponent implements OnInit {
 
   StepSelect(_step: number) {
     // no permitimos avanzar a otros pasos
-    if (this.StepOne===false && _step > 1) {
-      this.toastrService.error('Debes completar el primer paso antes de continuar.', 'Error');
+      if (this.StepOne === false && _step > 1) {
+      this.toastrService.error(
+        'Debes completar el primer paso antes de continuar.',
+        'Error'
+      );
       return; // Salir de la función si no existe el token
     }
 

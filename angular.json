@@ -45,7 +45,7 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/pg-hab/",
+              "baseHref": "/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
