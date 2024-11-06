@@ -2,11 +2,11 @@ const isProd = false;
 export const environment = {
   production: isProd,
   dian: {
-    domain: 'https://apidian.monaros.com.co',
+    domain: 'https://apidian.pgfacture.com',
   },
   session: {
-    name: 'MONAROS SAS',
-    email: 'gerencia@monaros.co',
-    password: 'Monaros2024$',
+    name: 'DANISOFT SAS SAS',
+    email: 'deivinson7059@gmail.com',
+    password: 'Danisoft2016$',
   },
 };

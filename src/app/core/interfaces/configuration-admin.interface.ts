@@ -266,6 +266,11 @@ export interface certificateSettingsData {
   certificate: string;
   password: string;
 }
+
+export interface ApiLogoResponse {
+  success: boolean;
+  message: string;
+}
 export interface ApiCertificateResponse {
   success: boolean;
   message: string;
@@ -701,6 +706,12 @@ export interface PayrollAdjustment {
   deductions?: Deductions;
 }
 
+export interface logoSettings {
+  logo: string;
+}
+export interface logoSettingsData {
+  logo: string;
+}
 
 export interface EnvironmentSettings {
   type_environment_id: number;

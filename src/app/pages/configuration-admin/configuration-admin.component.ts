@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UtilsSpinnerService, UtilsToastrService } from 'ngx-danisoft-utils';
 import {
   ApiCertificateResponse,
+  ApiLogoResponse,
   certificateSettingsData,
   Department,
   EmployeSettings,
@@ -11,6 +12,8 @@ import {
   HttpErrorResponse,
   Invoice,
   InvoiceEeqdocs,
+  logoSettings,
+  logoSettingsData,
   Municipality,
   NumberRangeResponseT,
   Payroll,
@@ -122,6 +125,18 @@ export class ConfigurationAdminComponent implements OnInit {
     {
       selected: false,
       number: 6,
+      title: 'Logotipo',
+      description: 'Cargue el logotipo de la empresa',
+      status: 'is-wait',
+      style: {
+        'flex-basis': '33.3333%',
+        'margin-right': '0px',
+      },
+      flexClass: 'is-flex',
+    },
+    {
+      selected: false,
+      number: 7,
       title: 'Finalizar',
       description: 'Finalizar configuración',
       status: 'is-wait',
@@ -414,6 +429,42 @@ export class ConfigurationAdminComponent implements OnInit {
     // console.log ( y ) ;
     return y > 1 ? 11 - y : y;
   };
+
+  swToken: boolean = false;
+  onTokenChange(event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.swToken = isChecked;
+  }
+
+  apiToken: string = '';
+  apiTokenReadonly: boolean = false;
+
+  saveToken() {
+    console.log(this.apiToken);
+    if (this.apiToken === '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Ingrese un token válido',
+      });
+
+      return;
+    }
+
+    //guaramos el token en el localstorage
+    localStorage.setItem('pg-api-token', this.apiToken);
+    //this.apiTokenReadonly = true;
+    this.toastrService.success('Token guardado correctamente', 'success');
+
+    this.stepItems[0].status = 'is-wait';
+    this.stepItems[0].selected = false;
+
+    this.stepItems[1].status = 'is-process';
+    this.stepItems[1].selected = true;
+
+    this.Step = 2;
+    this.StepOne = true;
+  }
 
   swCorreo: boolean = false;
 
@@ -1942,8 +1993,8 @@ export class ConfigurationAdminComponent implements OnInit {
     const prefix = this.resolutionPayroll.prefix;
     this.payroll.consecutive = fNumber;
 
-    for (let i = 0; i < limit; i++) {
-      const currentNumber = fNumber + i;
+    for (let i: number = 0; i < limit; i++) {
+      const currentNumber = parseInt(fNumber.toString()) + i;
       this.payroll.consecutive = currentNumber;
       this.payroll.prefix = prefix;
 
@@ -2004,10 +2055,113 @@ export class ConfigurationAdminComponent implements OnInit {
       console.error('Error al enviar la nómina de ajuste:', error);
     }
   }
+  /**
+   *
+   * Step 6 - Logotipo
+   *
+   */
+
+  showbase64Logo: boolean = false;
+  filesLogo: File[] = [];
+  base64Logo: string = '';
+  logoPreviewUrl= '';
+
+  configLogoForm: FormGroup = new FormGroup({
+    logo: new FormControl(null, [Validators.required]),
+  });
+
+  onSelectLogo(event: any) {
+    //console.log(event);
+    const { rejectedFiles, addedFiles } = event;
+
+    if (rejectedFiles.length > 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'El archivo no es válido',
+      });
+
+      this.base64Logo = '';
+      this.filesLogo = [];
+      this.logoPreviewUrl = '';
+      return;
+    }
+    //this.files.push(...addedFiles);
+    this.filesLogo = addedFiles.slice(-1);
+
+    if (this.filesLogo.length > 0) {
+      this.getToBase64Logo(this.filesLogo[0]);
+    } else {
+      this.base64Logo = '';
+      this.logoPreviewUrl = '';
+    }
+  }
+
+  onRemoveLogo(file: File) {
+    this.files.splice(this.filesLogo.indexOf(file), 1);
+    this.base64Logo = '';
+    this.filesLogo = [];
+    this.logoPreviewUrl = '';
+  }
+
+  getToBase64Logo(file: File): void {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String: string = reader.result as string;
+      const base64WithoutMimeType: string = base64String.split(',')[1];
+      this.base64Logo = base64WithoutMimeType;
+      this.logoPreviewUrl = base64String;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  onConfigLogo() {
+
+    if (this.filesLogo.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Cargue un logotipo válido',
+      });
+      return;
+    }
+
+    let data: logoSettingsData = {
+      logo: this.base64Logo,
+    };
+
+    console.log(data);
+
+    this.spinnerService.show();
+    this.configurationAdminService.configLogo(data).subscribe(
+      (res) => {
+        res = res as ApiLogoResponse;
+        console.log(res);
+        this.spinnerService.hide();
+        if (res.success === true) {
+          this.toastrService.success(res.message, 'success');
+          this.stepItems[5].status = 'is-wait';
+          this.stepItems[5].selected = false;
+
+          this.stepItems[6].status = 'is-process';
+          this.stepItems[6].selected = true;
+
+          this.Step = 7;
+        } else {
+          this.toastrService.error(res.message, 'error');
+        }
+      },
+      (e: HttpErrorResponse<ErrorResponse>) => {
+        this.spinnerService.hide();
+        console.log(e);
+        Swal.fire('Error!', 'Error al subir logotipo', 'error');
+      }
+    );
+  }
 
   /**
    *
-   * Step 6 Finalizar
+   * Step 7 Finalizar
    *
    */
 
@@ -2337,7 +2491,7 @@ export class ConfigurationAdminComponent implements OnInit {
 
   StepSelect(_step: number) {
     // no permitimos avanzar a otros pasos
-      if (this.StepOne === false && _step > 1) {
+    if (this.StepOne === false && _step > 1) {
       this.toastrService.error(
         'Debes completar el primer paso antes de continuar.',
         'Error'

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import {
   ApiCertificateResponse,
   ApiCompanyResponse,
+  ApiLogoResponse,
   ApiNumberingResponse,
   ApiResolutionResponse,
   ApiSoftwareResponse,
@@ -15,6 +16,7 @@ import {
   HttpErrorResponse,
   Invoice,
   InvoiceEeqdocs,
+  logoSettingsData,
   Payroll,
   PayrollAdjustment,
   PayrollApiResponse,
@@ -193,6 +195,15 @@ export class ConfigurationAdminService {
     );
   }
 
+  configLogo(
+    data: logoSettingsData
+  ): Observable<ApiLogoResponse | HttpErrorResponse<ErrorResponse>> {
+    return this.httpService.put<
+      ApiLogoResponse | HttpErrorResponse<ErrorResponse>
+    >(`${dian.domain}/api/ubl2.1/config/logo`, data, {
+      headers: this.apiHeaders,
+    });
+  }
   configEnvironment(
     data: EnvironmentSettings
   ): Observable<EnvironmentUpdateResponse> {
